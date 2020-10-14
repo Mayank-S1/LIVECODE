@@ -1,0 +1,53 @@
+<!doctype html>
+<html>
+    <head>
+        <title>CodeMirror</title>
+       <h1>CODE EDITOR</h1>
+
+        <script src= "https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/codemirror.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/codemirror.min.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/mode/clike/clike.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/theme/ayu-dark.min.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/addon/edit/closebrackets.min.js"></script>
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+    </head>
+
+       <body>
+        <div class="dropdown">
+            <button onclick="myFunction()" class="dropbtn">Dropdown</button>
+            <div id="myDropdown" class="dropdown-content">
+                <a href="index.html">c++</a>
+            </div>
+          </div>
+
+
+
+        <textarea id="editor"></textarea>
+        <script>
+           var editor = CodeMirror.fromTextArea(document.getElementById('editor'),{
+                lineNumbers: true,
+                mode: "text/x-c++src",
+                theme: "ayu-dark",
+              autoCloseBrackets: true,
+              smartIndent : true
+            });
+
+           editor.setSize("1100","350");
+         </script>
+         <input type="button" onclick="myFunction()" value="Compile Code">
+
+
+        <p id="demo"></p>
+         <script>
+
+          function myFunction(){
+           var source=editor.getValue();
+              }
+          </script>
+
+    </body>
+
+
+
+</html>
