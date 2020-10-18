@@ -16,8 +16,9 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 import rooms.views
+import rooms.urls
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', rooms.views.code_editor,name="code_editor"),
+    path('', include('rooms.urls')),
 ]

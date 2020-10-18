@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
     <head>
-        <title>CodeMirror</title>
+        <title>CODE EDITOR</title>
        <h1>CODE EDITOR</h1>
 
         <script src= "https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/codemirror.min.js"></script>
@@ -10,24 +10,24 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/theme/ayu-dark.min.css">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/addon/edit/closebrackets.min.js"></script>
         <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     </head>
 
        <body>
-        <div class="dropdown">
-            <button onclick="myFunction()" class="dropbtn">Dropdown</button>
-            <div id="myDropdown" class="dropdown-content">
-                <a href="index.html">c++</a>
-            </div>
-          </div>
 
 
 
-        <textarea id="editor"></textarea>
-        <script>
+ <a href="{% url 'python' %}">Python(PYTHON)</a><br>
+  <a href="{% url 'c++14' %}">C++14(CPP14)</a><br>
+  <a href="{% url 'java' %}">Java(JAVA)</a><br>
+ <form name="form">
+     <textarea id="editor" name="fulltext"></textarea><br><br>
+   <label for="lang">language mode</label>
+     <input type="text" id="lang" name="lang"><br><br>
+     <script>
            var editor = CodeMirror.fromTextArea(document.getElementById('editor'),{
                 lineNumbers: true,
-                mode: "text/x-c++src",
+                mode: "text/x-java",
                 theme: "ayu-dark",
               autoCloseBrackets: true,
               smartIndent : true
@@ -35,16 +35,13 @@
 
            editor.setSize("1100","350");
          </script>
-         <input type="button" onclick="myFunction()" value="Compile Code">
+
+     <input type="submit" value="COMPILE" onclick="javascript: form.action='{% url 'compile' %}';">
+  <input type="submit" value="RUN"  onclick="javascript: form.action='{% url 'run' %}';">
+   </form>
 
 
-        <p id="demo"></p>
-         <script>
-
-          function myFunction(){
-           var source=editor.getValue();
-              }
-          </script>
+</script>
 
     </body>
 
