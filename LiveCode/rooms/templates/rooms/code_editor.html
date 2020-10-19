@@ -6,28 +6,38 @@
 
         <script src= "https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/codemirror.min.js"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/codemirror.min.css">
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/mode/clike/clike.min.js"></script>
+        <script src="{{ file }}"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/theme/ayu-dark.min.css">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/addon/edit/closebrackets.min.js"></script>
-        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
     </head>
 
-       <body>
+    <body>
 
+<div class="dropdown">
+  <button class="dropbtn">LANGUAGE</button>
+  <div class="dropdown-content">
+        <a href="{% url 'python' %}">Python</a>
+        <a href="{% url 'c++' %}">C++</a>
+        <a href="{% url 'java' %}">Java</a>
+  </div>
+</div>
 
-
- <a href="{% url 'python' %}">Python(PYTHON)</a><br>
-  <a href="{% url 'c++14' %}">C++14(CPP14)</a><br>
-  <a href="{% url 'java' %}">Java(JAVA)</a><br>
+        <h3>{{ lg }}</h3>
  <form name="form">
-     <textarea id="editor" name="fulltext"></textarea><br><br>
-   <label for="lang">language mode</label>
-     <input type="text" id="lang" name="lang"><br><br>
-     <script>
+     <textarea id="editor" name="fulltext"></textarea>
+   <label for="lang"></label>
+     <input type="hidden" id="lang" name="lang" value="{{ lg }}"><br>
+     <input type="submit" value="COMPILE" onclick="javascript: form.action='{% url 'compile' %}';">
+  <input type="submit" value="RUN"  onclick="javascript: form.action='{% url 'run' %}';">
+   </form>
+
+
+      <script>
            var editor = CodeMirror.fromTextArea(document.getElementById('editor'),{
                 lineNumbers: true,
-                mode: "text/x-java",
+                mode: "{{ mode }}",
                 theme: "ayu-dark",
               autoCloseBrackets: true,
               smartIndent : true
@@ -35,16 +45,5 @@
 
            editor.setSize("1100","350");
          </script>
-
-     <input type="submit" value="COMPILE" onclick="javascript: form.action='{% url 'compile' %}';">
-  <input type="submit" value="RUN"  onclick="javascript: form.action='{% url 'run' %}';">
-   </form>
-
-
-</script>
-
     </body>
-
-
-
 </html>

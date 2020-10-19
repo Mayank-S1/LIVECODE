@@ -10,16 +10,27 @@ RUN_URL = "https://api.hackerearth.com/v3/code/run/"
 CLIENT_SECRET = '3185f9039c18e37035493d92bfddba7ca7e0d691'
 
 
-permitted_languages = ["C", "CPP", "CSHARP", "CLOJURE", "CSS", "HASKELL", "JAVA", "JAVASCRIPT", "OBJECTIVEC", "PERL", "PHP", "PYTHON", "R", "RUBY", "RUST", "SCALA"]
+permitted_languages = ["PYTHON", "CPP", "JAVA", "CLOJURE", "C", "HASKELL", "JAVA", "JAVASCRIPT", "OBJECTIVEC", "PERL", "PHP", "PYTHON", "R", "RUBY", "RUST", "SCALA"]
 
-def code_editor(request):
-    return render(request,'rooms/code_editor-python.html');
+def code_editor_python(request):
+    u = "https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/mode/python/python.min.js"
+    return render(request, 'rooms/code_editor.html', {'mode': "text/x-python",'lg': "PYTHON3",'file': u });
 
-def code_editor2(request):
-    return render(request,'rooms/code_editor-java.html');
+def code_editor_cpp(request):
+    u = "https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/mode/clike/clike.min.js"
+    return render(request, 'rooms/code_editor.html',{'mode': "text/x-c++src",'lg': "CPP14",'file': u });
 
-def code_editor3(request):
-    return render(request,'rooms/code_editor-c++.html');
+def code_editor_java(request):
+    u = "https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/mode/clike/clike.min.js"
+    return render(request, 'rooms/code_editor.html',{'mode': "text/x-java",'lg': "JAVA" ,'file' :u });
+
+def code_editor_c(request):
+    u = "https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/mode/clike/clike.min.js"
+    return render(request, 'rooms/code_editor.html',{'mode': "text/x-csrc ", 'lg': "C", 'file': u });
+
+def code_editor_javascript(request):
+    u = "https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/mode/javascript/javascript.min.js"
+    return render(request, 'rooms/code_editor.html', {'mode': "text/javascript",'lg': "	JAVASCRIPT",'file': u });
 
 
 
@@ -56,5 +67,5 @@ def compileCode(request):
           }
           r = requests.post(COMPILE_URL, data=data)
           d = r.json()
-          return render(request,'rooms/output.html',{'op':d['compile_status']});
+          return render(request,'rooms/output.html', {'op': d['compile_status'] });
 
