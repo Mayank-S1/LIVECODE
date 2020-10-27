@@ -1,5 +1,7 @@
 from django.shortcuts import render
 from django.http import JsonResponse, HttpResponseForbidden
+from django.http import HttpResponse
+from django.views.decorators.csrf import csrf_exempt
 #from .models import codes
 import urllib.parse
 import urllib.request
@@ -30,7 +32,7 @@ def code_editor_c(request):
 
 def code_editor_javascript(request):
     u = "https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/mode/javascript/javascript.min.js"
-    return render(request, 'rooms/code_editor.html', {'mode': "text/javascript",'lg': "	JAVASCRIPT",'file': u });
+    return render(request, 'rooms/code_editor.html', {'mode': "text/javascript",'lg': "JAVASCRIPT",'file': u });
 
 
 
@@ -40,32 +42,26 @@ def code_editor_javascript(request):
 
 
 def runCode(request):
-     source = request.GET['fulltext']
-     lang = request.GET['lang']
-     data = {
-    'client_secret': CLIENT_SECRET,
-    'async': 0,
-    'source': source,
-    'lang': lang,
-    'time_limit': 5,
-    'memory_limit': 262144,
-     }
-     r = requests.post(RUN_URL, data=data)
-     d = r.json()
-     return render(request,'rooms/output.html',{'op':d['run_status']['output']});
+    source = request.POST['source']
+    lang = request.POST['lang']
+    data = {
+        'client_secret': CLIENT_SECRET,
+        'async': 0,
+        'source': source,
+        'lang': lang,
+    }
+    r = requests.post(RUN_URL, data=data)
+    return JsonResponse(r.json(), safe=False)
 
 def compileCode(request):
-          source = request.GET['fulltext']
-          lang = request.GET['lang']
-          data = {
-              'client_secret': CLIENT_SECRET,
-              'async': 0,
-              'source': source,
-              'lang': lang,
-              'time_limit': 5,
-              'memory_limit': 262144,
-          }
-          r = requests.post(COMPILE_URL, data=data)
-          d = r.json()
-          return render(request,'rooms/output.html', {'op': d['compile_status'] });
+      source = request.POST['source']
+      lang = request.POST['lang']
+      compile_data = {
+        'client_secret': CLIENT_SECRET,
+        'async': 0,
+        'source': source,
+        'lang': lang,
+      }
+      r = requests.post(COMPILE_URL, data=compile_data)
+      return JsonResponse(r.json(), safe=False)
 

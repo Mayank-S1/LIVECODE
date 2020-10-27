@@ -1,45 +1,56 @@
-
-<!doctype html>
+<!DOCTYPE html>
 <html>
-    <head>
-        <title>CODE EDITOR</title>
-       <h1>CODE EDITOR</h1>
+<head>
+    <meta charset="utf-8"/>
+    <title>Chat Room</title>
 
         <script src= "https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/codemirror.min.js"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/codemirror.min.css">
-        <script src="{{ file }}"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/mode/python/python.min.js"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/theme/ayu-dark.min.css">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/addon/edit/closebrackets.min.js"></script>
-        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
 
-    </head>
+</head>
+<body>
+    <textarea id="editor"cols="150" rows="20"></textarea><br>
+    {{ room_name|json_script:"room-name" }}
 
-    <body>
+    <script>
+        const roomName = JSON.parse(document.getElementById('room-name').textContent);
 
-<div class="dropdown">
-  <button class="dropbtn">LANGUAGE</button>
-  <div class="dropdown-content">
-        <a href="{% url 'python' %}">Python</a>
-        <a href="{% url 'c++' %}">C++</a>
-        <a href="{% url 'java' %}">Java</a>
-  </div>
-</div>
+        const chatSocket = new WebSocket(
+            'ws://'
+            + window.location.host
+            + '/ws/chat/'
+            + roomName
+            + '/'
+        );
 
-        <h3>{{ lg }}</h3>
-       <textarea id="editor" name="fulltext"></textarea>
-        <script>
-           var editor = CodeMirror.fromTextArea(document.getElementById('editor'),{
-                lineNumbers: true,
-                mode: "{{ mode }}",
-                theme: "ayu-dark",
-              autoCloseBrackets: true,
-              smartIndent : true
-            });
+        chatSocket.onmessage = function(e) {
+            const data = JSON.parse(e.data);
+            document.querySelector('#editor').value = '';
+            document.querySelector('#editor').value = data.message ;
 
-           editor.setSize("500","350");
-         </script>
-         <br>
+        };
 
+
+        document.querySelector('#editor').focus();
+        document.querySelector('#editor').onkeyup = function(e) {
+
+                document.querySelector('#editor').click();
+
+        };
+
+        document.querySelector('#editor').onclick = function(e) {
+            const messageInputDom = document.querySelector('#editor');
+            const message = messageInputDom.value;
+            chatSocket.send(JSON.stringify({
+                'message': message
+            }));
+
+        };
+    </script>
          <input type="button" onclick="myFunction1()" value="COMPILE">
          <input type="button" onclick="myFunction2()" value="RUN">
 
@@ -50,8 +61,8 @@
          <script>
          function myFunction1(){
 
-         var text = editor.getValue();
-         var formData = {source:text,lang:"{{ lg }}"};
+         var text = document.querySelector('#editor').value;
+         var formData = {source:text,lang:"PYTHON3"};
          $.ajax({
                   url : "{% url 'compile' %}",
                   type: "POST",
@@ -67,8 +78,8 @@
             }
 
           function myFunction2(){
-            var text = editor.getValue();
-            var formData = {source:text,lang:"{{ lg }}"};
+            var text =  document.querySelector('#editor').value;
+            var formData = {source:text,lang:"PYTHON3"};
             $.ajax({
                     url : "{% url 'run' %}",
                     type: "POST",
@@ -84,5 +95,5 @@
 
 
       </script>
-    </body>
+</body>
 </html>
