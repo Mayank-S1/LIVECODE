@@ -13,9 +13,28 @@
 
 </head>
 <body>
-    <textarea id="editor"cols="150" rows="20"></textarea><br>
-    {{ room_name|json_script:"room-name" }}
 
+    <div class="grid-container">
+
+          <div class="grid-item">
+              <h3>CODE EDITOR</h3>
+              <textarea id="editor"cols="90" rows="20"></textarea><br>
+              <input type="button" onclick="myFunction1()" value="COMPILE">
+              <input type="button" onclick="myFunction2()" value="RUN">
+
+             <h4>OUTPUT</h4>
+             <textarea  rows="4" cols="50" id="output"></textarea>
+          </div>
+
+          <div class="grid-item">
+              <h3>CHAT</h3>
+              <textarea id="chat-log" cols="60" rows="20"></textarea><br>
+    <input id="chat-message-input" type="text" size="50"><br>
+    <input id="chat-message-submit" type="button" value="Send">
+    {{ room_name|json_script:"room-name" }}
+          </div>
+    </div>
+    <p id="check" ></p>
     <script>
         const roomName = JSON.parse(document.getElementById('room-name').textContent);
 
@@ -29,36 +48,61 @@
 
         chatSocket.onmessage = function(e) {
             const data = JSON.parse(e.data);
-            document.querySelector('#editor').value = '';
-            document.querySelector('#editor').value = data.message ;
+            var str = data.message;
+            var res = str.charAt(str.length-1);
+            str = str.substring(0,str.length - 1);
+            if(res=='#')
+            {
+            document.querySelector('#chat-log').value += ( str + '\n');
+            }
+            else if(res=='$')
+            {
+               document.querySelector('#editor').value = '';
+               document.querySelector('#editor').value =  str;
+            }
+            else if(res=='&')
+            {
+               document.querySelector('#output').value = '';
+               document.querySelector('#output').value =  str;
+            }
+        };
 
+        chatSocket.onclose = function(e) {
+            console.error('Chat socket closed unexpectedly');
         };
 
 
-        document.querySelector('#editor').focus();
-        document.querySelector('#editor').onkeyup = function(e) {
+        document.querySelector('#chat-message-input').onkeyup = function(e) {
+            if (e.keyCode === 13) {  // enter, return
+                document.querySelector('#chat-message-submit').click();
+            }
+        };
 
+         document.querySelector('#editor').onkeyup = function(e) {
                 document.querySelector('#editor').click();
-
         };
 
-        document.querySelector('#editor').onclick = function(e) {
+
+        document.querySelector('#chat-message-submit').onclick = function(e) {
+            const messageInputDom = document.querySelector('#chat-message-input');
+            var message = messageInputDom.value;
+            message= message+"#";
+             chatSocket.send(JSON.stringify({
+                'message': message
+            }));
+            messageInputDom.value = '';
+        };
+         document.querySelector('#editor').onclick = function(e) {
             const messageInputDom = document.querySelector('#editor');
-            const message = messageInputDom.value;
-            chatSocket.send(JSON.stringify({
+            var message = messageInputDom.value;
+            message= message+"$";
+             chatSocket.send(JSON.stringify({
                 'message': message
             }));
 
         };
     </script>
-         <input type="button" onclick="myFunction1()" value="COMPILE">
-         <input type="button" onclick="myFunction2()" value="RUN">
-
-         <h3>OUTPUT</h3>
-         <textarea  rows="4" cols="50" id="demo"></textarea>
-
-
-         <script>
+ <script>
          function myFunction1(){
 
          var text = document.querySelector('#editor').value;
@@ -68,32 +112,44 @@
                   type: "POST",
                   data : formData,
                   success: function(data, textStatus, jqXHR){
-                    $('#demo').html( JSON.stringify(data['compile_status']));
-                    },
-                  error: function (jqXHR, textStatus, errorThrown){
-                  alert(errorThrown);
-                  }
+                        res = JSON.stringify(data['compile_status']);
+                        const message = res+"&";
+                        chatSocket.send(JSON.stringify({
+                        'message': message
+                       }));
+                   },
+                   error: function (jqXHR, textStatus, errorThrown){
+                   alert(errorThrown);
+                   }
                });
 
             }
 
           function myFunction2(){
-            var text =  document.querySelector('#editor').value;
+
+            var text = document.querySelector('#editor').value;
             var formData = {source:text,lang:"PYTHON3"};
             $.ajax({
                     url : "{% url 'run' %}",
                     type: "POST",
                     data : formData,
                    success: function(data, textStatus, jqXHR)   {
-                     $('#demo').html( JSON.stringify(data['run_status']['output']));
+                         res = JSON.stringify(data['run_status']['output']);
+                        const message = res+"&";
+                       chatSocket.send(JSON.stringify({
+                       'message': message
+                       }));
+
                      },
                    error: function (jqXHR, textStatus, errorThrown){
                    alert(errorThrown);
                    }
                 });
+
                }
 
 
       </script>
+
 </body>
 </html>
