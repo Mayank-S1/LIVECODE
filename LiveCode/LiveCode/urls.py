@@ -17,10 +17,9 @@ from django.contrib import admin
 from django.urls import path, include
 import chat.urls
 import rooms.urls
+from . import views
 
 urlpatterns = [
     path('', admin.site.urls),
-    path('chat/', include(('chat.urls'))),
-    path('code_editor/',include('rooms.urls')),
-
-]
+    path('chat/', include(('chat.urls')),name='chat'),
+   ]

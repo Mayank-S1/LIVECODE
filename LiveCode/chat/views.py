@@ -11,13 +11,23 @@ COMPILE_URL = "https://api.hackerearth.com/v3/code/compile/"
 RUN_URL = "https://api.hackerearth.com/v3/code/run/"
 CLIENT_SECRET = '3185f9039c18e37035493d92bfddba7ca7e0d691'
 
+
 def index(request):
     return render(request, 'chat/index.html', {})
 
-def room(request, room_name):
-    return render(request, 'chat/room.html', {
-        'room_name': room_name
-    })
+
+def room(request):
+    room_name = request.GET['room_name']
+    user = request.GET['User']
+    u = "https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/mode/python/python.min.js"
+
+    return render(request, 'chat/room.html', {'room_name': room_name,'user':user ,'mode': "text/x-python",'lg': "PYTHON3",'file': u});
+
+
+
+
+
+
 
 
 def runCode(request):

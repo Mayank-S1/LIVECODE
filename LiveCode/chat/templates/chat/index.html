@@ -1,4 +1,3 @@
-<!-- chat/templates/chat/index.html -->
 <!DOCTYPE html>
 <html>
 <head>
@@ -6,23 +5,15 @@
     <title>Chat Rooms</title>
 </head>
 <body>
-    What chat room would you like to enter?<br>
-    <input id="room-name-input" type="text" size="100"><br>
-    <input id="room-name-submit" type="button" value="Enter">
+    What chat room would you like to enter?<br><br>
 
-    <script>
-        document.querySelector('#room-name-input').focus();//used to give focus to an element
+<form action='{% url 'room' %}'>
+  <label for="room-name-input">Room name:</label>
+  <input type="text" id="room-name-input" name="room_name"><br><br>
+     <label for="User">User:</label>
+  <input type="text" id="User" name="User"><br><br>
+  <input type="submit" value="Submit">
+</form>
 
-        document.querySelector('#room-name-input').onkeyup = function(e) {
-            if (e.keyCode === 13) {  // enter key check
-                document.querySelector('#room-name-submit').click();
-            }
-        };
-
-        document.querySelector('#room-name-submit').onclick = function(e) {
-            var roomName = document.querySelector('#room-name-input').value;
-            window.location.pathname = '/chat/' + roomName + '/';//returns the path and filename of the current page
-        };
-    </script>
 </body>
 </html>
