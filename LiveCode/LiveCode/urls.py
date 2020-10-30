@@ -20,6 +20,6 @@ import rooms.urls
 from . import views
 
 urlpatterns = [
-    path('', admin.site.urls),
-    path('chat/', include(('chat.urls')),name='chat'),
+    path('admin/', admin.site.urls),
+    path('', include(('chat.urls')),name='chat'),
    ]

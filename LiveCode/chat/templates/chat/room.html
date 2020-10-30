@@ -58,6 +58,7 @@
 
         const roomName = '{{ room_name }}'
         const user = '{{ user }}'
+
         var flag1,flag2;
         var enter1 = ["\n"];
         var enter2 = ["\n\n"];
@@ -109,7 +110,7 @@
 
         editor.on('change', function(e, changeObj){
         //console.log(changeObj.text.length);
-        console.log(changeObj);
+       // console.log(changeObj);
            if(flag1 == 1)
            {
 
@@ -149,7 +150,7 @@
                 flag1=data.message.s ^ 1;
                 flag2=data.message.r ^ 1;
                 }
-                console.log(flag1);
+               // console.log(flag1);
                 console.log(flag2);
 
            }
@@ -214,12 +215,15 @@
 
          var text = editor.getValue();
          var formData = {source:text,lang:"{{ lg }}"};
+
+
          $.ajax({
+
                   url : "{% url 'compile' %}",
                   type: "POST",
                   data : formData,
                   success: function(data, textStatus, jqXHR){
-                        res = JSON.stringify(data['compile_status']);
+                        res= data['compile_status'];
                         chatSocket.send(JSON.stringify({
                         'message': {
                              message: res,
@@ -235,14 +239,18 @@
             }
 
           function myFunction2(){
-            var text =  editor.getValue();
+
+           var text =  editor.getValue();
             var formData = {source:text,lang:"{{ lg }}"};
+
             $.ajax({
+
                     url : "{% url 'run' %}",
                     type: "POST",
                     data : formData,
                    success: function(data, textStatus, jqXHR)   {
-                        res = JSON.stringify(data['run_status']['output']);
+
+                      res= data['run_status']['output']
                         chatSocket.send(JSON.stringify({
                         'message': {
                              message: res,

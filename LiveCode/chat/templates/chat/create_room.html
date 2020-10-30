@@ -1,69 +1,34 @@
-<div class="container mt-4">
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>Join Rooms</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+{{ data }}
+<div class=" mt-5 row row-cols-1 row-cols-md-2" align="left">
+  <div class="col mb-4">
+    <div class="card">
+      <div class="card-body">
+          <h5 class="card-title" >
+              <h2 style="text-align:left;">Create Room</h2></h5><br>
+              <form action="{% url 'register' %}" method="POST">
+                  {% csrf_token %}
+              <h4>Room name:<input id="jn-nm" type="text" name="room-name" size="45" placeholder="Enter room name" required>
+              <h4>Room Password:</h4><input id="jn-pw" type="text" name="Password" size="45" placeholder="Enter room password" required><br><br>
+              <input id="jn-sb" class="btn btn-success" type="submit" value="Enter">
+             </form>
+         </div>
+      </div>
+  </div>
 
-    <div class="p-4 m-4">
-
-
-        <div class="col-lg-5 rounded mx-auto border pt-4">
-            <div class="text-center col">
-
-
-            <!-- <hr> -->
-            <div class="display-8">Create An Account</div>
-            <hr>
-            </div>
-            <h3 hidden class="alert alert-light border rounded">Create An Account</h3>
-            <form action="#" method="POST">
-
-                <!-- firstname -->
-                <div class="form-group">
-                    <label for="">First Name</label>
-                    <input type="text" name="firstname"
-                     id=""  class="form-control form-control-sm"
-                     placeholder="">
-                </div>
-
-                <!-- last name -->
-                <div class="form-group">
-                    <label for="">Last Name</label>
-                    <input type="text" name="lastname"
-                    id=""  class="form-control form-control-sm"
-                    >
-                </div>
-
-                <!-- phone -->
-                <div class="form-group">
-                    <label for="">Phone</label>
-                    <input type="text" name="phone"
-                    id="" class="form-control form-control-sm"
-
-                    placeholder="565698959"
-                    >
-                </div>
-                <!-- email -->
-                <div class="form-group">
-                    <label for="">Email</label>
-                    <input required type="email" name="email" id=""
-
-                    class=" form-control-sm form-control" placeholder="example@gmail.com">
-                </div>
-
-
-                <!-- password -->
-                <div class="form-group">
-                    <label for="">Password</label>
-                    <input type="password"
-                    name="password"
-                    id=""
-                     class="form-control form-control-sm" placeholder="********">
-                </div>
-
-                <hr>
-                <div class="form-group">
-                    <input class="btn btn-sm btn-info" type="submit" value="Create An Account ">
-                </div>
-
-
-            </form>
-        </div>
-    </div>
 </div>
+
+
+</script>
+   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+   <script src="https://code.jquery.cosm/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+</body>
+</html>
