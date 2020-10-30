@@ -16,7 +16,6 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 import chat.urls
-import rooms.urls
 from . import views
 
 urlpatterns = [
