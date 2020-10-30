@@ -4,21 +4,31 @@
     <meta charset="utf-8"/>
     <title>Chat Room</title>
 
-
-
         <script src= "https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/codemirror.min.js"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/codemirror.min.css">
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/mode/python/python.min.js"></script>
+        <script src="{{ file }}"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/theme/ayu-dark.min.css">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/addon/edit/closebrackets.min.js"></script>
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
+
+
+    <form>
+        <h3>Language</h3>
+        <input  type="hidden" name="room_name" value="{{ room_name }}">
+         <input  type="hidden" name="User" value="{{ user }}">
+           <input type="submit" value="Python" onclick="javascript: form.action='{% url 'python' %}';">
+        <input type="submit" value="Cpp" onclick="javascript: form.action='{% url 'cpp' %}';">
+        <input type="submit" value="Java" onclick="javascript: form.action='{% url 'java' %}';">
+
+    </form>
+
 
 </head>
 <body>
     <div class="grid-container">
 
           <div class="grid-item">
-              <h3>CODE EDITOR</h3>
+              <h3>CODE EDITOR: {{ lg }}</h3>
               <textarea id="editor"cols="90" rows="20" placeholder="Write your Code Here"></textarea><br>
               <input type="button" onclick="myFunction1()" value="COMPILE">
               <input type="button" onclick="myFunction2()" value="RUN">
@@ -37,15 +47,13 @@
     <p id="check" ></p>
 
     <script>
-       var value = false;
+
         var editor = CodeMirror.fromTextArea(document.getElementById('editor'),{
-             mode: 'text/x-python',
+             mode: "{{ mode }}",
              lineNumbers: true,
               theme: "ayu-dark",
               autoCloseBrackets: true,
               smartIndent : true,
-
-
              });
 
         const roomName = '{{ room_name }}'
@@ -99,12 +107,9 @@
         });
 
 
-
-
-
         editor.on('change', function(e, changeObj){
         //console.log(changeObj.text.length);
-        //console.log(changeObj);
+        console.log(changeObj);
            if(flag1 == 1)
            {
 
@@ -208,7 +213,7 @@
          function myFunction1(){
 
          var text = editor.getValue();
-         var formData = {source:text,lang:"PYTHON3"};
+         var formData = {source:text,lang:"{{ lg }}"};
          $.ajax({
                   url : "{% url 'compile' %}",
                   type: "POST",
@@ -231,7 +236,7 @@
 
           function myFunction2(){
             var text =  editor.getValue();
-            var formData = {source:text,lang:"PYTHON3"};
+            var formData = {source:text,lang:"{{ lg }}"};
             $.ajax({
                     url : "{% url 'run' %}",
                     type: "POST",
@@ -255,6 +260,7 @@
 
 
       </script>
+
 
 </body>
 </html>

@@ -23,12 +23,26 @@ def room(request):
 
     return render(request, 'chat/room.html', {'room_name': room_name,'user':user ,'mode': "text/x-python",'lg': "PYTHON3",'file': u});
 
+def python(request):
+    room_name = request.GET['room_name']
+    user = request.GET['User']
+    u = "https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/mode/python/python.min.js"
+    return render(request, 'chat/room.html',{'room_name': room_name, 'user': user, 'mode': "text/x-python", 'lg': "PYTHON3", 'file': u});
+
+
+def cpp(request):
+    room_name = request.GET['room_name']
+    user = request.GET['User']
+    u = "https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/mode/clike/clike.min.js"
+    return render(request, 'chat/room.html',{'room_name': room_name, 'user': user,'mode': "text/x-c++src",'lg': "CPP14",'file': u });
 
 
 
-
-
-
+def java(request):
+    room_name = request.GET['room_name']
+    user = request.GET['User']
+    u = "https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.58.1/mode/clike/clike.min.js"
+    return render(request, 'chat/room.html',{'room_name': room_name, 'user': user,'mode': "text/x-java",'lg': "JAVA" ,'file' :u});
 
 def runCode(request):
     source = request.POST['source']
