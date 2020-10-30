@@ -93,7 +93,7 @@ def register(request):
     user = User(room_name=room_name, password=password)
     user.password = make_password(user.password)
     user.register()
-    link = 'http://127.0.0.1:8000/login/enter_room'
+    link = 'http://127.0.0.1:8000/login'
     return HttpResponse('LINK :'+' '+link)
 
 

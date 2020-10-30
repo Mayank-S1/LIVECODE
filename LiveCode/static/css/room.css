@@ -1,0 +1,58 @@
+* {
+    box-sizing: border-box;
+}
+body{
+    background-color: #FEFAEC;
+}
+
+/* Create two unequal columns that floats next to each other */
+.column {
+    float: left;
+    padding: 10px;
+    height: 1020px;
+    /* Should be removed. Only for demonstration */
+}
+
+.left {
+    width: 75%;
+}
+
+.right {
+    width: 25%;
+}
+
+/* Clear floats after the columns */
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+input{
+
+    background-color: #e7e7e7; color: black;
+
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: navajowhite;
+    display: inline-block;
+    font-size: 13px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 10px;
+}
+#addBtn{
+    background-color: #e7e7e7; color: black;
+
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: navajowhite;
+    display: inline-block;
+    font-size: 13px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 10px;
+}
+h3,h1,h5{
+    color: white;
+  text-shadow: 1px 1px 2px black, 0 0 25px , 0 0 5px rgb(34, 34, 100);
+}
