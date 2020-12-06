@@ -5,7 +5,7 @@ shared users. This could help people having a low bandwidth network. Embedding
 programming language support and a mini chat window will make it more sophisticated.
 
 
-Basic Features:
+BASIC FEATURES:
 
 • Ability to create multiple interview rooms with different links and passwords.
 
@@ -17,7 +17,7 @@ languages. (User must be able to switch across languages).
 • Chat Window for communication.
 
 
-Advanced Features:
+ADVANCED FEATURES:
 
 • Ability to run code after providing input and getting the result using some
 available API.
