@@ -18,8 +18,12 @@ languages. (User must be able to switch across languages).
 
 
 Advanced Features:
+
 • Ability to run code after providing input and getting the result using some
 available API.
+
 • Allow Note taking available for interviewer only.
+
 • The candidate is able to join the room only after the interviewer lets them in.
+
 • Ability to support multiple interviewers in a single room.
