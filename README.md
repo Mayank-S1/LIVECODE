@@ -6,10 +6,14 @@ programming language support and a mini chat window will make it more sophistica
 
 
 Basic Features:
+
 • Ability to create multiple interview rooms with different links and passwords.
+
 • Code editor with proper indentation and keyword highlighting for multiple
 languages. (User must be able to switch across languages).
+
 • Edited code should be visible to all users instantly.
+
 • Chat Window for communication.
 
 
